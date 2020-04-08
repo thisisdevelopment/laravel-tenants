@@ -1,0 +1,38 @@
+{
+    "name": "thisisdevelopment/laravel-tenants",
+    "description": "A package to provide multi tenancy to laravel applications with minimal effort",
+    "keywords": ["laravel", "multi-tenancy", "tenants"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Eric de Ruiter",
+            "email": "eric@thisisdevelopment.nl"
+        }
+    ],
+    "require": {
+        "tenancy/db-driver-mysql": "dev-master",
+        "tenancy/framework": "dev-master",
+        "tenancy/hooks-migration": "dev-master",
+        "tenancy/identification-driver-console": "dev-master",
+        "tenancy/identification-driver-queue": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "ThisIsDevelopment\\LaravelTenants\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ThisIsDevelopment\\LaravelTenants\\TenantsProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "post-package-install": [
+
+        ]
+    }
+}
