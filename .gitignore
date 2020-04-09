@@ -19,3 +19,4 @@ Vagrantfile
 common.env
 *~
 /.idea
+/composer.lock

@@ -10,6 +10,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Tenancy\Environment;
 use Tenancy\Identification\Concerns\AllowsTenantIdentification;
 use Tenancy\Identification\Contracts\Tenant;
+use Tenancy\Identification\Drivers\Queue\Events\Processing;
 use Tenancy\Tenant\Events\Created;
 use Tenancy\Tenant\Events\Deleted;
 use ThisIsDevelopment\LaravelTenants\Contracts\TenantAuth;
@@ -94,5 +95,14 @@ trait ProvidesTenant
         }
 
         return $this->getByTenantKey($selected);
+    }
+
+    public function tenantIdentificationByQueue(Processing $event): ?Tenant
+    {
+        if (empty($event->tenant_key)) {
+            return null;
+        }
+
+        return $this->getByTenantKey($event->tenant_key);
     }
 }
