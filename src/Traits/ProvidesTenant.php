@@ -73,6 +73,10 @@ trait ProvidesTenant
         }
 
         $allowed = $user->getAllowedTenants();
+        if ($allowed !== null && $allowed->isEmpty()) {
+            return null;
+        }
+
         $default = $user->getDefaultTenant();
         if ($allowed === null) {
             assert($default !== null, 'Default should not be null when allowed === null');
