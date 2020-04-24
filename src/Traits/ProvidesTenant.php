@@ -53,7 +53,7 @@ trait ProvidesTenant
     public function scopeTenant(Builder $query, \ThisIsDevelopment\LaravelTenants\Contracts\Tenant $tenant): void
     {
         $allowed = app(Environment::class)->getAllowedTenants()->pluck('id')->all();
-        $query->whereIn($this->getTenantKeyName(), $allowed);
+        $query->whereIn("{$this->getTable()}.{$this->getTenantKeyName()}", $allowed);
     }
 
     public function tenantIdentificationByConsole(InputInterface $input): ?Tenant
