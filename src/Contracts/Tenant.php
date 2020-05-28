@@ -9,5 +9,7 @@ use Tenancy\Identification\Drivers\Queue\Contracts\IdentifiesByQueue;
 
 interface Tenant extends TenantAuth, BaseTenant, IdentifiesByConsole, IdentifiesByQueue, IdentifiesByAuthenticatedRequest
 {
+    public function getTenantDBSuffix(): string;
 
+    public function getTenantDBConfig(): array;
 }

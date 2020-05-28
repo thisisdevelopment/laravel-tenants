@@ -10,11 +10,11 @@
         }
     ],
     "require": {
-        "tenancy/db-driver-mysql": "dev-master",
-        "tenancy/framework": "dev-master",
-        "tenancy/hooks-migration": "dev-master",
-        "tenancy/identification-driver-console": "dev-master",
-        "tenancy/identification-driver-queue": "dev-master"
+        "tenancy/db-driver-mysql": "^1.0",
+        "tenancy/framework": "^1.0",
+        "tenancy/hooks-migration": "^1.0",
+        "tenancy/identification-driver-console": "^1.0",
+        "tenancy/identification-driver-queue": "^1.0"
     },
     "autoload": {
         "psr-4": {

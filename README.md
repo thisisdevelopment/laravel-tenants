@@ -14,10 +14,8 @@ For an example see https://github.com/thisisdevelopment/laravel-tenants-example
 
 # Todo
 
-- make:migration => support for database/tenants/migrations path (adding --tenant)
-- copy database dir to database/tenants when package is installed/updated and dir does not exists
-- come up with a way to run migrations / seeds for system db + all tenant db's
 - integrate with laravel-test-snapshot
+- proper seed support
 - support sqlite
 - cleanup
 - .. 
@@ -72,7 +70,7 @@ class Test extends Model
 ```
 
 and move all of the migrations / seeders for these models to 
-the `database/tenants/migrations` / `database/tenants/seeds` so they will only be used for tenant databases.  
+the `database/migrations/<tenant model name>` / `database/seeds/<tenant model name>` so they will only be used for tenant databases.  
 
 
 ### 4) find the models which should be restricted once you switched to the tenant db and use our `TenantScoped` trait

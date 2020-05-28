@@ -33,6 +33,18 @@ trait ProvidesTenant
         static::bootTenantScoped();
     }
 
+    public function getTenantDBSuffix(): string
+    {
+        return $this->getTenantKey();
+    }
+
+    public function getTenantDBConfig(): array
+    {
+        $config = config('database.connections.' . config('database.default'));
+        $config['database'] .= '__' . $this->getTenantDBSuffix();
+        return $config;
+    }
+
     public function getAllowedTenants(): ?Collection
     {
         return null;
@@ -52,7 +64,7 @@ trait ProvidesTenant
 
     public function scopeTenant(Builder $query, \ThisIsDevelopment\LaravelTenants\Contracts\Tenant $tenant): void
     {
-        $allowed = app(Environment::class)->getAllowedTenants()->pluck('id')->all();
+        $allowed = app(Environment::class)->getAllowedTenants()->pluck($this->getTenantKeyName())->all();
         $query->whereIn("{$this->getTable()}.{$this->getTenantKeyName()}", $allowed);
     }
 
@@ -94,7 +106,7 @@ trait ProvidesTenant
             $selected = $default;
         }
 
-        if (!in_array($selected, $allowed->pluck('id')->all(), false)) {
+        if (!in_array($selected, $allowed->pluck($this->getTenantKeyName())->all(), false)) {
             throw new UnauthorizedException('Invalid tenant specified');
         }
 
