@@ -10,7 +10,7 @@ trait SupportsTenantMigrations
 {
     protected function getMigrationPath()
     {
-        if ($this->input->hasOption('tenant')) {
+        if ($this->input->getOption('tenant')) {
             return TenantsProvider::getDatabasePath();
         }
 
@@ -21,7 +21,7 @@ trait SupportsTenantMigrations
     {
         /** @var InputInterface $input */
         $input = $this->input;
-        if ($input->hasOption('database') && $input->hasOption('tenant')) {
+        if ($input->hasOption('database') && $input->getOption('tenant')) {
 
             $connection = Tenancy::getTenantConnectionName();
             $input->setOption('database', $connection);
