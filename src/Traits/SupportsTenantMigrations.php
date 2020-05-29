@@ -8,23 +8,21 @@ use ThisIsDevelopment\LaravelTenants\TenantsProvider;
 
 trait SupportsTenantMigrations
 {
-    protected function getMigrationPath()
-    {
-        if ($this->input->getOption('tenant')) {
-            return TenantsProvider::getDatabasePath();
-        }
-
-        return parent::getMigrationPath();
-    }
-
     public function handle()
     {
         /** @var InputInterface $input */
         $input = $this->input;
+        
+        if ($input->hasOption('path') && $input->getOption('tenant')) {
+            $input->setOption('path', TenantsProvider::getDatabasePath());
+            $input->setOption('realpath', true);
+        }
+        
         if ($input->hasOption('database') && $input->getOption('tenant')) {
 
             $connection = Tenancy::getTenantConnectionName();
             $input->setOption('database', $connection);
+            
 
             if (strtolower($input->getOption('tenant')) === 'all') {
 
