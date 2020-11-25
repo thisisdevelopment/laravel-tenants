@@ -2,7 +2,6 @@
 
 namespace ThisIsDevelopment\LaravelTenants;
 
-use ArgumentCountError;
 use Illuminate\Auth\Events\Authenticated;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -115,11 +114,7 @@ class TenantsProvider extends ServiceProvider implements ProvidesConfiguration
     protected function registerCommands()
     {
         $this->app->extend('command.migrate', function () {
-            try {
-                return new MigrateCommand($this->app['migrator'], $this->app[Dispatcher::class]);
-            } catch (ArgumentCountError $e) {
-                return new MigrateCommand($this->app['migrator']);
-            }
+            return new MigrateCommand($this->app['migrator'], $this->app[Dispatcher::class]);
         });
 
         $this->app->extend('command.migrate.fresh', function () {
