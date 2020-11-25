@@ -4,6 +4,7 @@ namespace ThisIsDevelopment\LaravelTenants;
 
 use Illuminate\Auth\Events\Authenticated;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
@@ -113,6 +114,10 @@ class TenantsProvider extends ServiceProvider implements ProvidesConfiguration
     protected function registerCommands()
     {
         $this->app->extend('command.migrate', function () {
+            if ((new \ReflectionClass(MigrateCommand::class))->getConstructor()->getNumberOfParameters() > 1) {
+                return new MigrateCommand($this->app['migrator'], $this->app[Dispatcher::class]);
+            }
+
             return new MigrateCommand($this->app['migrator']);
         });
 
